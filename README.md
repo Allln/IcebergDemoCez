@@ -36,7 +36,7 @@ Keep tunnel alive so minikube is exposed to host and to docker containers
 minikube tunnel
 ```
 
-Interacting with Trino adjust for your prj name if needed :) ... docker exec -it <your-project-name>_trino-1 /bin/sh
+Interacting with Trino adjust for your prj name if needed :) ... docker exec -it your-project-name_trino-1 /bin/sh
 ```
 docker exec -it icebergdemo-trino-1 /bin/sh
 ```
