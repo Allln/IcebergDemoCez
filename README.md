@@ -95,7 +95,10 @@ Login: admin / password
 If you want to go Minikube + Docker Desktop way, you may need to adjust the hostAliases IP in iceberg-rest.yaml.
 Copy the resolved IP into hostAliases
 Use the following to determine the correct host IP based on minikube perspective:
+```
 minikube ssh
+```
+```
 ping host.docker.internal
-
+```
 rest should be clear from k8s/iceberg-rest.yaml from comments
