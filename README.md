@@ -36,6 +36,10 @@ docker-compose up -d
 kubectl delete deployment iceberg-rest --ignore-not-found
 kubectl delete service iceberg-rest --ignore-not-found
 kubectl apply -f k8s/iceberg-rest.yaml
+```
+From new cmd...
+Keep tunnel alive so minikube is exposed to host and to docker containers 
+```
 minikube tunnel
 ```
 
