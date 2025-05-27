@@ -28,6 +28,7 @@ minikube start
 docker-compose build --no-cache
 ```
 
+From prj root
 ```
 docker-compose down
 docker-compose up -d
@@ -39,7 +40,7 @@ minikube tunnel
 ```
 
 
-
+Interacting with Trino adjust for your prj name if needed :) ... docker exec -it <your-project-name>_trino-1 /bin/sh
 ```
 docker exec -it icebergdemo-trino-1 /bin/sh
 ```
@@ -93,4 +94,8 @@ Login: admin / password
 ## Tips:
 If you want to go Minikube + Docker Desktop way, you may need to adjust the hostAliases IP in iceberg-rest.yaml.
 Copy the resolved IP into hostAliases
+Use the following to determine the correct host IP based on minikube perspective:
+minikube ssh
+ping host.docker.internal
 
+rest should be clear from k8s/iceberg-rest.yaml from comments
