@@ -35,8 +35,8 @@ spec:
               value: s3://warehouse/
             - name: CATALOG_IO__IMPL
               value: org.apache.iceberg.aws.s3.S3FileIO
-
-
+            #minikube ssh
+            #ping host.docker.internal fill for minikube - docker-compose
             - name: CATALOG_S3_ENDPOINT
               value: http://192.168.65.254:9000
           #args: ["--add-host=host.docker.internal:host-gateway"]

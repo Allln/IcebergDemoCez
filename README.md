@@ -68,7 +68,7 @@ Python Client Demo
 A separate Python non-worker/cli_client container runs example.py to perform Trino operations.
 See the python-client/ folder for a basic example using the trino Python package.
 
-CLI Interface (no web API)
+## CLI Interface (no web API)
 Use the CLI container to interact with Iceberg tables:
 ```
 docker-compose run --rm trino-cli create_table
@@ -90,7 +90,7 @@ MinIO Console
 Psst...
 Login: admin / password
 
-Tips:
+## Tips:
 If you want to go Minikube + Docker Desktop way, you may need to adjust the hostAliases IP in iceberg-rest.yaml.
 Copy the resolved IP into hostAliases
 
