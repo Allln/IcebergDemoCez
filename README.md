@@ -5,34 +5,27 @@ Most of the functions are just for demonstration purposes so they are very light
 - MinIO for S3-compatible object storage  
 - Trino as the SQL engine  
 - Iceberg REST catalog served via Kubernetes (Minikube)
-
-
 ## Requirements
 - Docker + Docker Compose
 - Minikube with `kubectl` configured
 - Python 3.11+ (for optional Python client)
-
 ## Overview
 - MinIO: object storage accessible at http://localhost:9001 (UI)
 - Trino: SQL engine Cluster Overview  at http://localhost:8080
 - Iceberg REST catalog: deployed on Kubernetes via `k8s/iceberg-rest.yaml`
-
 ## Intro aka. how to control available parts of the system
-
 Start Docker containers...
 
 ```bash
 minikube start
 ```
+From project root
 ```
 docker-compose build --no-cache
 ```
-
-From prj root
 ```
 docker-compose down
 docker-compose up -d
-
 kubectl delete deployment iceberg-rest --ignore-not-found
 kubectl delete service iceberg-rest --ignore-not-found
 kubectl apply -f k8s/iceberg-rest.yaml
@@ -42,7 +35,6 @@ Keep tunnel alive so minikube is exposed to host and to docker containers
 ```
 minikube tunnel
 ```
-
 
 Interacting with Trino adjust for your prj name if needed :) ... docker exec -it <your-project-name>_trino-1 /bin/sh
 ```
