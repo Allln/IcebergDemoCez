@@ -90,3 +90,7 @@ MinIO Console
 Psst...
 Login: admin / password
 
+Tips:
+If you want to go Minikube + Docker Desktop way, you may need to adjust the hostAliases IP in iceberg-rest.yaml.
+Copy the resolved IP into hostAliases
+
