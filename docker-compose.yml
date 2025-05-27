@@ -1,0 +1,85 @@
+
+services:
+  minio:
+    image: minio/minio
+    container_name: minio
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=password
+      - MINIO_DOMAIN=minio
+    networks:
+      iceberg_net:
+        aliases:
+          - warehouse.minio
+    ports:
+      - 9001:9001
+      - 9000:9000
+    command: ["server", "/data", "--console-address", ":9001"]
+  trino:
+    image: trinodb/trino:436
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./trino/etc:/etc/trino
+      - ./trino/etc/catalog:/etc/trino/catalog
+      - ./trino/etc/core-site.xml:/etc/trino/core-site.xml
+
+    environment:
+      - AWS_ACCESS_KEY_ID=admin
+      - AWS_SECRET_ACCESS_KEY=password
+    depends_on:
+      - minio
+    networks:
+      - iceberg_net
+#  rest:
+#    image: apache/iceberg-rest-fixture
+#    container_name: iceberg-rest
+#
+#    networks:
+#      iceberg_net:
+#    ports:
+#      - 8181:8181
+#    environment:
+#      - AWS_ACCESS_KEY_ID=admin
+#      - AWS_SECRET_ACCESS_KEY=password
+#      - AWS_REGION=us-east-1
+#      - CATALOG_WAREHOUSE=s3://warehouse/
+#      - CATALOG_IO__IMPL=org.apache.iceberg.aws.s3.S3FileIO
+#      - CATALOG_S3_ENDPOINT=http://minio:9000
+  mc:
+    depends_on:
+      - minio
+    image: minio/mc
+    container_name: mc
+    networks:
+      iceberg_net:
+    entrypoint: >
+      /bin/sh -c "
+      until (/usr/bin/mc alias set minio http://minio:9000 admin password) do echo '...waiting...' && sleep 1; done;
+      /usr/bin/mc mb minio/warehouse || true;
+      /usr/bin/mc anonymous set public minio/warehouse;
+      tail -f /dev/null
+      "
+#  trino-client:
+#    image: python:3.11
+#    container_name: trino-client
+#    volumes:
+#      - ./python-client:/app
+#    working_dir: /app
+#    command: sh -c "pip install -r requirements.txt && python example.py && tail -f /dev/null"
+#    depends_on:
+#      - trino
+#    networks:
+#      - iceberg_net
+  trino-cli:
+    build:
+      context: ./trino-cli
+    container_name: trino-cli
+    depends_on:
+      - trino
+    networks:
+      - iceberg_net
+networks:
+  iceberg_net:
+volumes:
+  pg_data:
